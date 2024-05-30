@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
         <HiHome className="w-7 h-7" />
         <span className="font-bold hidden xl:inline">Home</span>
       </Link>
-      <button className="bg-blue-400 text-white w-48 h-9 rounded-full hover:brightness-95 shadow-md transition-all duration-200 hidden xl:inline">Sign In</button>
+      <button className="bg-blue-400 font-semibold text-white w-48 h-9 rounded-full hover:brightness-95 shadow-md transition-all duration-200 hidden xl:inline">Sign In</button>
     </div>
   );
 };
