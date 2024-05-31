@@ -1,3 +1,4 @@
+import Feed from "@/components/Feed";
 import NewPost from "@/components/NewPost";
 import Image from "next/image";
 
@@ -8,6 +9,7 @@ export default function Home() {
         <h2 className="text-lg sm:text-xl font-bold">Home</h2>
       </div>
       <NewPost />
+      <Feed />
     </main>
   );
 }

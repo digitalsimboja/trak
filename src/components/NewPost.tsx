@@ -90,6 +90,7 @@ const NewPost: React.FC = () => {
     setText("");
     setImageFileUrl(null);
     setSelectedFile(null);
+    location.reload();
   };
 
   useEffect(() => {
