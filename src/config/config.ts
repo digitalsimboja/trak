@@ -6,5 +6,8 @@ export const config = {
     nextAuth: {
         url: process.env.NEXTAUTH_URL,
         secret: process.env.NEXTAUTH_SECRET
+    },
+    firebase: {
+        apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     }
 }
