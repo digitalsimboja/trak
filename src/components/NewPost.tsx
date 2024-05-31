@@ -10,12 +10,21 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "@/firebase";
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  serverTimestamp,
+} from "firebase/firestore";
 
-const TrakInput: React.FC = () => {
+const NewPost: React.FC = () => {
   const { data: session } = useSession();
   const [imageFileUrl, setImageFileUrl] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
+  const [text, setText] = useState("");
+  const [posting, setPosting] = useState(false);
+  const db = getFirestore(app);
 
   const imagePickRef = useRef<HTMLInputElement>(null);
 
@@ -64,6 +73,25 @@ const TrakInput: React.FC = () => {
     );
   };
 
+  const handlePostSubmit = async () => {
+    setPosting(true);
+
+    const docRef = await addDoc(collection(db, "posts"), {
+      uuid: session?.user.uuid,
+      name: session?.user.name,
+      username: session?.user.username,
+      text,
+      profileImg: session?.user.image,
+      postImg: imageFileUrl,
+      timestamp: serverTimestamp(),
+    });
+
+    setPosting(false);
+    setText("");
+    setImageFileUrl(null);
+    setSelectedFile(null);
+  };
+
   useEffect(() => {
     if (selectedFile) {
       uploadImageToStorage();
@@ -84,7 +112,18 @@ const TrakInput: React.FC = () => {
           className="w-full border-none outline-none tracking-wide min-h-[50px]"
           placeholder="What's happening?"
           rows={2}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         ></textarea>
+        {selectedFile && (
+          <img
+            src={imageFileUrl as string}
+            alt="Selected image"
+            className={`w-full max-h-[250px] object-cover cursor-pointer ${
+              uploading ? "animate-pulse" : ""
+            }`}
+          />
+        )}
         <div className="flex justify-between items-center pt-2.5">
           <HiOutlinePhotograph
             onClick={() => imagePickRef.current?.click()}
@@ -98,25 +137,16 @@ const TrakInput: React.FC = () => {
             onChange={addImageToPost}
           />
           <button
-            onClick={uploadImageToStorage}
+            onClick={handlePostSubmit}
             className="bg-blue-400 text-white px-4 py-1.5 rounded-full font-bold shadow-md hover:brightness-95 disabled:opacity-50"
-            disabled={!selectedFile || uploading}
+            disabled={uploading || text.trim() === "" || posting}
           >
             Post
           </button>
         </div>
-        {imageFileUrl && (
-          <div className="pt-2.5">
-            <img
-              src={imageFileUrl}
-              alt="Selected image"
-              className="rounded-lg"
-            />
-          </div>
-        )}
       </div>
     </div>
   );
 };
 
-export default TrakInput;
+export default NewPost;
