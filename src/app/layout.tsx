@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import NewsFeed from "@/components/News";
 import SessionWrapper from "@/components/SessionWrapper";
+import CommentModal from "@/components/CommentModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
               <NewsFeed />
             </div>
           </div>
+          <CommentModal />
         </body>
       </html>
     </SessionWrapper>

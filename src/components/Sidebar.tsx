@@ -1,7 +1,6 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
 import { HiHome, HiDotsHorizontal } from "react-icons/hi";
 import { MdTrackChanges } from "react-icons/md";
@@ -40,7 +39,7 @@ const Sidebar: React.FC = () => {
       </div>
       {session && (
         <div className="flex cursor-pointer p-3 hover:bg-gray-100 rounded-full transition-all duration-200 text-gray-700 text-sm items-center">
-          <Image
+          <img
             src={session.user.image as string}
             alt="user profile image"
             className="rounded-full w-10 h-10 xl:mr-2"

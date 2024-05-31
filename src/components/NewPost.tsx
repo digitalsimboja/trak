@@ -104,7 +104,7 @@ const NewPost: React.FC = () => {
 
   return (
     <div className="flex border-b border-gray-200 p-3 space-x-3 w-full">
-      <Image
+      <img
         src={session.user.image as string}
         alt="user profile image"
         className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
@@ -118,7 +118,7 @@ const NewPost: React.FC = () => {
           onChange={(e) => setText(e.target.value)}
         ></textarea>
         {selectedFile && (
-          <Image
+          <img
             src={imageFileUrl as string}
             alt="Selected image"
             className={`w-full max-h-[250px] object-cover cursor-pointer ${

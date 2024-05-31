@@ -8,8 +8,8 @@ import GoogleProvider from 'next-auth/providers/google'
 const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: config.google.clientId as string,
-      clientSecret: config.google.clientSecret as string,
+      clientId: config.google.clientId! as string,
+      clientSecret: config.google.clientSecret! as string,
     })
   ],
   callbacks: {
@@ -23,8 +23,7 @@ const authOptions: NextAuthOptions = {
       }
       return session;
     }
-  },
-  debug: true,
+  }
 }
 const handler = NextAuth(authOptions);
 

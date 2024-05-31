@@ -21,7 +21,7 @@ export interface PostProps {
 export default function Post({ post }: { post: PostProps }) {
   return (
     <div className="flex p-3 border-b border-gray-200 hover:bg-gray-50">
-      <Image
+      <img
         src={post.profileImg}
         alt={`${post.username} image`}
         className="h-11 w-11 rounded-full mr-4"
@@ -40,7 +40,7 @@ export default function Post({ post }: { post: PostProps }) {
           <p className="text-sm text-gray-800 my-3 truncate">{post.text}</p>
         </Link>
         <Link href={`/posts/${post.id}`}>
-          <Image
+          <img
             src={post.postImg as string}
             alt=""
             className="rounded-2xl mr-2 max-h-[250px] w-full object-cover"
