@@ -16,6 +16,7 @@ import {
   getFirestore,
   serverTimestamp,
 } from "firebase/firestore";
+import Image from "next/image";
 
 const NewPost: React.FC = () => {
   const { data: session } = useSession();
@@ -103,7 +104,7 @@ const NewPost: React.FC = () => {
 
   return (
     <div className="flex border-b border-gray-200 p-3 space-x-3 w-full">
-      <img
+      <Image
         src={session.user.image as string}
         alt="user profile image"
         className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
@@ -117,7 +118,7 @@ const NewPost: React.FC = () => {
           onChange={(e) => setText(e.target.value)}
         ></textarea>
         {selectedFile && (
-          <img
+          <Image
             src={imageFileUrl as string}
             alt="Selected image"
             className={`w-full max-h-[250px] object-cover cursor-pointer ${

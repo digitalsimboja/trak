@@ -41,7 +41,7 @@ const NewsFeed: React.FC = () => {
                   {article.source.name}
                 </p>
               </div>
-              <img src={article.urlToImage} width={70} className="rounded-xl" />
+              <img src={article.urlToImage} width={70} height={70} alt="article-img" className="rounded-xl" />
             </div>
           </a>
         </div>
