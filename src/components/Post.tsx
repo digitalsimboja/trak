@@ -16,9 +16,10 @@ export interface PostProps {
   profileImg: string;
   text: string;
   timestamp: Timestamp;
-  postImg?: string; // optional property
+  postImg?: string; 
 }
-export default function Post({ post }: { post: PostProps }) {
+export default function Post({ post, id }: { post: PostProps, id: string }) {
+  
   return (
     <div className="flex p-3 border-b border-gray-200 hover:bg-gray-50">
       <img

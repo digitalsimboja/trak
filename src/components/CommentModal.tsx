@@ -16,7 +16,7 @@ import {
 } from "firebase/firestore";
 import { app } from "@/firebase";
 import { PostProps } from "./Post";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { error } from "console";
 
 const CommentModal: React.FC = () => {
@@ -25,6 +25,7 @@ const CommentModal: React.FC = () => {
   const { data: session } = useSession();
   const [post, setPost] = useState<PostProps | null>(null);
   const [replyText, setReplyText] = useState("");
+  const pathname = usePathname();
   const router = useRouter();
   const db = getFirestore(app);
 
@@ -43,21 +44,25 @@ const CommentModal: React.FC = () => {
   }, [postId]);
 
   const handleComment = async () => {
-    addDoc(collection(db, "posts", postId, "comments"), {
-      name: session?.user.name,
-      username: session?.user.username,
-      userImg: session?.user.image,
-      comment: replyText,
-      timestamp: serverTimestamp(),
-    })
-      .then(() => {
-        setReplyText("");
-        setOpen(false);
-        router.push(`posts/${postId}`);
-      })
-      .catch((error) => {
-        console.error("Error adding a comment", error);
+    try {
+      await addDoc(collection(db, "posts", postId, "comments"), {
+        name: session?.user.name,
+        username: session?.user.username,
+        userImg: session?.user.image,
+        comment: replyText,
+        timestamp: serverTimestamp(),
       });
+
+      setReplyText("");
+      setOpen(false);
+
+      // Check if the current route is already the post route
+      if (pathname !== `/posts/${postId}`) {
+        router.push(`/posts/${postId}`);
+      }
+    } catch (error) {
+      console.error("Error adding a comment", error);
+    }
   };
 
   return (

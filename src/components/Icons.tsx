@@ -114,8 +114,6 @@ export default function Icons({ id, uuid }: { id: string; uuid: string }) {
     return () => unsubscribe();
   }, [db, id]);
 
-  console.log(comments);
-
   return (
     <div className="flex justify-start gap-5 p-2 text-gray-500">
       <div className="flex items-center">
