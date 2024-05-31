@@ -20,13 +20,18 @@ import {
   HiOutlineTrash,
 } from "react-icons/hi";
 import { useRecoilState } from "recoil";
+import { Timestamp } from "./Post";
 
 interface Like {
   username: string;
-  timestamp: {
-    seconds: number;
-    nanoseconds: number;
-  };
+  timestamp: Timestamp;
+}
+interface Comment {
+  comment: string;
+  name: string;
+  timestamp: Timestamp;
+  userImg: string;
+  username: string;
 }
 
 export default function Icons({ id, uuid }: { id: string; uuid: string }) {
@@ -36,6 +41,7 @@ export default function Icons({ id, uuid }: { id: string; uuid: string }) {
   const [likes, setLikes] = useState<Like[]>([]);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   const likePost = async () => {
     if (session) {
@@ -90,19 +96,42 @@ export default function Icons({ id, uuid }: { id: string; uuid: string }) {
     );
   }, [likes]);
 
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", id, "comments"),
+      (snapshot) => {
+        const commendData: Comment[] = snapshot.docs.map((doc) => ({
+          username: doc.data().username,
+          comment: doc.data().comment,
+          timestamp: doc.data().timestamp,
+          name: doc.data().name,
+          userImg: doc.data().userImg,
+        }));
+
+        setComments(commendData);
+      }
+    );
+    return () => unsubscribe();
+  }, [db, id]);
+
+  console.log(comments);
+
   return (
     <div className="flex justify-start gap-5 p-2 text-gray-500">
-      <HiOutlineChat
-        onClick={() => {
-          if (!session) {
-            signIn();
-          } else {
-            setOpen(!open);
-            setPostId(id);
-          }
-        }}
-        className="w-8 h-8 cursor-pointer rounded-full transition duration-500 ease-in-out p-2 hover:text-sky-500 hover:bg-sky-100"
-      />
+      <div className="flex items-center">
+        <HiOutlineChat
+          onClick={() => {
+            if (!session) {
+              signIn();
+            } else {
+              setOpen(!open);
+              setPostId(id);
+            }
+          }}
+          className="w-8 h-8 cursor-pointer rounded-full transition duration-500 ease-in-out p-2 hover:text-sky-500 hover:bg-sky-100"
+        />
+        {comments.length > 0 && <span className="text-xs">{comments.length}</span>}
+      </div>
       <div className="flex items-center">
         {isLiked ? (
           <HiHeart

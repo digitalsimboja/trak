@@ -3,7 +3,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import Icons from "./Icons";
 import Image from "next/image";
 
-interface Timestamp {
+export interface Timestamp {
   seconds: number;
   nanoseconds: number;
 }
