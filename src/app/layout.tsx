@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     "A platform for community-driven scam alerts and security crowdsourcing. Stay informed, avoid scams, and navigate safely with user-reported threat updates and green zone recommendations.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: Readonly<{
