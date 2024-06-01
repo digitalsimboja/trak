@@ -23,7 +23,7 @@ import { useRecoilState } from "recoil";
 import { Timestamp } from "./Post";
 import { CommentProps } from "./Comments";
 
-interface Like {
+export interface Like {
   username: string;
   timestamp: Timestamp;
 }
@@ -95,8 +95,9 @@ export default function Icons({ id, uuid }: { id: string; uuid: string }) {
       collection(db, "posts", id, "comments"),
       (snapshot) => {
         const commendData: CommentProps[] = snapshot.docs.map((doc) => ({
+          id: doc.data().id,
           username: doc.data().username,
-          comment: doc.data().comment,
+          text: doc.data().comment,
           timestamp: doc.data().timestamp,
           name: doc.data().name,
           userImg: doc.data().userImg,

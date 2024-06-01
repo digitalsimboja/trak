@@ -26,16 +26,18 @@ export default function Comments({ id }: { id: string }) {
 
   const db = getFirestore(app);
 
-  
   useEffect(() => {
-    const q = query(collection(db, "posts", id, "comments"), orderBy("timestamp", "desc"));
-    
+    const q = query(
+      collection(db, "posts", id, "comments"),
+      orderBy("timestamp", "desc")
+    );
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const commentsData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as CommentProps[];
-      
+
       setComments(commentsData);
     });
 
@@ -45,8 +47,7 @@ export default function Comments({ id }: { id: string }) {
   return (
     <div>
       {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} />
-       
+        <Comment key={comment.id} comment={comment} postId={id} />
       ))}
     </div>
   );
