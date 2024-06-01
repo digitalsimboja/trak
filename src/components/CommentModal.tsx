@@ -44,12 +44,13 @@ const CommentModal: React.FC = () => {
   }, [postId]);
 
   const handleComment = async () => {
+    // TODO: Define the commentProps before adding to the db
     try {
       await addDoc(collection(db, "posts", postId, "comments"), {
         name: session?.user.name,
         username: session?.user.username,
         userImg: session?.user.image,
-        comment: replyText,
+        text: replyText,
         timestamp: serverTimestamp(),
       });
 

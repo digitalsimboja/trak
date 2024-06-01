@@ -1,10 +1,15 @@
+import Comments from "@/components/Comments";
 import Post, { PostProps } from "@/components/Post";
 import { app } from "@/firebase";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import Link from "next/link";
 import { HiArrowLeft } from "react-icons/hi";
 
-export default async function PostPage({ params }: { params: { id: string } }) {
+export default async function PostPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const db = getFirestore(app);
 
   const querySnapshot = await getDoc(doc(db, "posts", params.id));
@@ -12,6 +17,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     id: querySnapshot.id,
     ...querySnapshot.data(),
   } as PostProps;
+
 
 
   return (
@@ -22,7 +28,8 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         </Link>
         <h2 className="sm:text-lg">Back</h2>
       </div>
-      <Post post={data} id={data.id} />
+      <Post post={data} />
+      <Comments id={params.id} />
     </div>
   );
 }

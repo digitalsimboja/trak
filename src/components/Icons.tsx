@@ -21,17 +21,11 @@ import {
 } from "react-icons/hi";
 import { useRecoilState } from "recoil";
 import { Timestamp } from "./Post";
+import { CommentProps } from "./Comments";
 
 interface Like {
   username: string;
   timestamp: Timestamp;
-}
-interface Comment {
-  comment: string;
-  name: string;
-  timestamp: Timestamp;
-  userImg: string;
-  username: string;
 }
 
 export default function Icons({ id, uuid }: { id: string; uuid: string }) {
@@ -41,7 +35,7 @@ export default function Icons({ id, uuid }: { id: string; uuid: string }) {
   const [likes, setLikes] = useState<Like[]>([]);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<CommentProps[]>([]);
 
   const likePost = async () => {
     if (session) {
@@ -100,7 +94,7 @@ export default function Icons({ id, uuid }: { id: string; uuid: string }) {
     const unsubscribe = onSnapshot(
       collection(db, "posts", id, "comments"),
       (snapshot) => {
-        const commendData: Comment[] = snapshot.docs.map((doc) => ({
+        const commendData: CommentProps[] = snapshot.docs.map((doc) => ({
           username: doc.data().username,
           comment: doc.data().comment,
           timestamp: doc.data().timestamp,
@@ -128,7 +122,9 @@ export default function Icons({ id, uuid }: { id: string; uuid: string }) {
           }}
           className="w-8 h-8 cursor-pointer rounded-full transition duration-500 ease-in-out p-2 hover:text-sky-500 hover:bg-sky-100"
         />
-        {comments.length > 0 && <span className="text-xs">{comments.length}</span>}
+        {comments.length > 0 && (
+          <span className="text-xs">{comments.length}</span>
+        )}
       </div>
       <div className="flex items-center">
         {isLiked ? (
