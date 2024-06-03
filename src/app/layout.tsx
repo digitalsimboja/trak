@@ -9,9 +9,9 @@ import CommentModal from "@/components/CommentModal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Trak | Community-Driven Scam Alerts and Security Crowdsourcing",
+  title: "Evvecast | Community-Driven Decentralized Social App for the Metaverse",
   description:
-    "A platform for community-driven scam alerts and security crowdsourcing. Stay informed, avoid scams, and navigate safely with user-reported threat updates and green zone recommendations.",
+    "A platform for community-driven social interaction for the Metaverse",
 };
 
 export const dynamic = "force-dynamic";

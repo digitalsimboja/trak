@@ -11,8 +11,9 @@ const Sidebar: React.FC = () => {
   return (
     <div className="flex flex-col gap-4 p-3 justify-between h-screen">
       <div className="flex flex-col gap-4 p-3">
-        <Link href="/">
+        <Link href="/" className="flex items-center">
           <MdTrackChanges className="text-blue-500 w-16 h-16 cursor-pointer p-3 hover:bg-gray-100 rounded-full transition-all duration-200" />
+          <span className="text-sm font-bold">Evvecast</span>
         </Link>
         <Link
           href="/"
